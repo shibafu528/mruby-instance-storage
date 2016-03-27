@@ -9,6 +9,14 @@ module InstanceStorage
 
   alias to_sym name
 
+  unless const_defined?(:Mutex)
+    class Mutex
+      def synchronize
+        yield
+      end
+    end
+  end
+
   def self.included(klass)
     super
     klass.class_eval do
